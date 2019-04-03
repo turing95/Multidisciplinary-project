@@ -1,2 +1,8 @@
+
+
+
+
+
 # Multidisciplinary-project
-Repo that contains papers,documents and code on the topic
+
+> Urban paths classification for touristic sake: from design to implementation.
