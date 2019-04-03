@@ -29,3 +29,5 @@ print(list(d))
 
 
 print(d.drop(columns=['date_s', 'date','latitude','longitude','ts','time_zone']))
+
+#for x in d, if d[i].date_min-d[i].date_min==1, df[d[i+1]] else create new_df[d[i++1]]
