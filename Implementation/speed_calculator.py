@@ -1,7 +1,4 @@
 import fiona
-import sys
-import time
-import pandas as pd
 import geopy.distance as ds
 import geopandas as gpd
 
@@ -23,7 +20,7 @@ with fiona.open('./shapefiles/Como_dataset.shp') as np:
     n = 0
     for tz in timezones:
         print("Percorso " + str(n))
-        n+=1
+        n += 1
         path = filter(lambda f: f['properties']['time_zone'] == tz, np)
         path = list(path)
         # print(path[0])
@@ -51,11 +48,9 @@ with fiona.open('./shapefiles/Como_dataset.shp') as np:
             paths.append(path[i])
         # break
 
-print(paths)
+# print(paths)
+
+gdf = gpd.GeoDataFrame.from_features(paths)
+
 # gdf = gpd.GeoDataFrame(paths)
-# gdf.to_file(driver = 'ESRI Shapefile', filename = './shapefiles/speedy_Como_dataset.shp')
-
-
-
-    # with fiona.open('./shapefiles/speedy_Como_dataset.shp', 'w', **meta) as  output:
-    #     pass
+gdf.to_file(driver = 'ESRI Shapefile', filename = './shapefiles/speedy_Como_dataset.shp')
