@@ -17,14 +17,14 @@ def plot_path_to_png(timezone='2017-03-28 15:22:00.000000',
 
     # verifico che il path non sia già stato generato
 
-    file_timezone = timezone.replace('.','').replace(' ','_')
+    file_timezone = timezone.replace('.','').replace(' ','__').replace(':','_')
 
     image_path = ospath.join(image_save_path, file_timezone) + '.png'
 
     if ospath.isfile(image_path):
         # in tal caso lo ritorno
         print('Image already existing at: ' + image_path)
-        return image_path
+        return image_path[1:]
 
     tmp.init(create=True)
     t = tmp.tiles.build_OSM()
@@ -40,6 +40,8 @@ def plot_path_to_png(timezone='2017-03-28 15:22:00.000000',
             if feature['properties']['time_zone'] == timezone:
                 paths.append(feature)
     print("Done.")
+
+
 
     tzgdf = gpd.GeoDataFrame.from_features(paths)
 
@@ -70,4 +72,4 @@ def plot_path_to_png(timezone='2017-03-28 15:22:00.000000',
 
     print("Done. Image saved as: " + image_path)
 
-    return image_path
+    return image_path[1:]

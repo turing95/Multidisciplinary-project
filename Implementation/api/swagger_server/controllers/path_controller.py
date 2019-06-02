@@ -50,6 +50,7 @@ def get_suggested_paths(userId, limit=None, offset=None):  # noqa: E501
     result = []
     for s in suggestions:
         image_url=path_to_png.plot_path_to_png(timezone = s['time_zone'])
+
         path = Path(
             path_id = s['pathId'],
             title = s['title'],
