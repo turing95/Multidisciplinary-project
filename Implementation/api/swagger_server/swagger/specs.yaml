@@ -99,10 +99,10 @@ paths:
         404:
           description: "No users found"
 
-  /paths/{userId}/suggested:
+  /user/{userId}/suggestedPaths:
     get:
       tags:
-      - "path"
+      - "user"
       summary: "Get suggested paths"
       description: "Get a set of suggested paths for the current user"
       operationId: "getSuggestedPaths"
@@ -197,6 +197,21 @@ definitions:
       title:
         type: "string"
         description: "Name of the path, shown to the User"
+      timestamp:
+        type: "string"
+        description: "Unix epoch time of the path"
+      coordinates:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            latitude:
+              type: "number"
+              format: "double"
+            longitude:
+              type: "number"
+              format: "double"
+
     title: "Path"
     description: "A path suggested to the user."
 

@@ -26,20 +26,6 @@ class TestPathController(BaseTestCase):
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
-    def test_get_suggested_paths(self):
-        """Test case for get_suggested_paths
-
-        Get suggested paths
-        """
-        query_string = [('limit', 789),
-                        ('offset', 789)]
-        response = self.client.open(
-            '/api/v1/paths/{userId}/suggested'.format(userId=789),
-            method='GET',
-            query_string=query_string)
-        self.assert200(response,
-                       'Response body is : ' + response.data.decode('utf-8'))
-
 
 if __name__ == '__main__':
     import unittest

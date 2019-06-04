@@ -68,7 +68,7 @@ def plot_path_to_png(timezone='2017-03-28 15:22:00.000000',
 
     print("Done, saving image...")
 
-    plt.savefig(image_path, dpi=300)
+    plt.savefig(image_path, dpi=300, bbox_inches='tight')
 
     print("Done. Image saved as: " + image_path)
 

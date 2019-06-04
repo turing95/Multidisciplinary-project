@@ -6,6 +6,7 @@ from datetime import date, datetime  # noqa: F401
 from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
+from swagger_server.models.path_coordinates import PathCoordinates  # noqa: F401,E501
 from swagger_server import util
 
 
@@ -15,7 +16,7 @@ class Path(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, path_id: int=None, average_speed: float=None, distance: float=None, image_url: str=None, title: str=None):  # noqa: E501
+    def __init__(self, path_id: int=None, average_speed: float=None, distance: float=None, image_url: str=None, title: str=None, timestamp: str=None, coordinates: List[PathCoordinates]=None):  # noqa: E501
         """Path - a model defined in Swagger
 
         :param path_id: The path_id of this Path.  # noqa: E501
@@ -28,13 +29,19 @@ class Path(Model):
         :type image_url: str
         :param title: The title of this Path.  # noqa: E501
         :type title: str
+        :param timestamp: The timestamp of this Path.  # noqa: E501
+        :type timestamp: str
+        :param coordinates: The coordinates of this Path.  # noqa: E501
+        :type coordinates: List[PathCoordinates]
         """
         self.swagger_types = {
             'path_id': int,
             'average_speed': float,
             'distance': float,
             'image_url': str,
-            'title': str
+            'title': str,
+            'timestamp': str,
+            'coordinates': List[PathCoordinates]
         }
 
         self.attribute_map = {
@@ -42,7 +49,9 @@ class Path(Model):
             'average_speed': 'average_speed',
             'distance': 'distance',
             'image_url': 'image_url',
-            'title': 'title'
+            'title': 'title',
+            'timestamp': 'timestamp',
+            'coordinates': 'coordinates'
         }
 
         self._path_id = path_id
@@ -50,6 +59,8 @@ class Path(Model):
         self._distance = distance
         self._image_url = image_url
         self._title = title
+        self._timestamp = timestamp
+        self._coordinates = coordinates
 
     @classmethod
     def from_dict(cls, dikt) -> 'Path':
@@ -178,3 +189,47 @@ class Path(Model):
             raise ValueError("Invalid value for `title`, must not be `None`")  # noqa: E501
 
         self._title = title
+
+    @property
+    def timestamp(self) -> str:
+        """Gets the timestamp of this Path.
+
+        Unix epoch time of the path  # noqa: E501
+
+        :return: The timestamp of this Path.
+        :rtype: str
+        """
+        return self._timestamp
+
+    @timestamp.setter
+    def timestamp(self, timestamp: str):
+        """Sets the timestamp of this Path.
+
+        Unix epoch time of the path  # noqa: E501
+
+        :param timestamp: The timestamp of this Path.
+        :type timestamp: str
+        """
+
+        self._timestamp = timestamp
+
+    @property
+    def coordinates(self) -> List[PathCoordinates]:
+        """Gets the coordinates of this Path.
+
+
+        :return: The coordinates of this Path.
+        :rtype: List[PathCoordinates]
+        """
+        return self._coordinates
+
+    @coordinates.setter
+    def coordinates(self, coordinates: List[PathCoordinates]):
+        """Sets the coordinates of this Path.
+
+
+        :param coordinates: The coordinates of this Path.
+        :type coordinates: List[PathCoordinates]
+        """
+
+        self._coordinates = coordinates

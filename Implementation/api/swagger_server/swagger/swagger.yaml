@@ -102,10 +102,10 @@ paths:
         404:
           description: "No users found"
       x-swagger-router-controller: "swagger_server.controllers.user_controller"
-  /paths/{userId}/suggested:
+  /user/{userId}/suggestedPaths:
     get:
       tags:
-      - "path"
+      - "user"
       summary: "Get suggested paths"
       description: "Get a set of suggested paths for the current user"
       operationId: "get_suggested_paths"
@@ -147,7 +147,7 @@ paths:
                   $ref: "#/definitions/Path"
         404:
           description: "Path not found"
-      x-swagger-router-controller: "swagger_server.controllers.path_controller"
+      x-swagger-router-controller: "swagger_server.controllers.user_controller"
 definitions:
   User:
     type: "object"
@@ -207,14 +207,27 @@ definitions:
       title:
         type: "string"
         description: "Name of the path, shown to the User"
+      timestamp:
+        type: "string"
+        description: "Unix epoch time of the path"
+      coordinates:
+        type: "array"
+        items:
+          $ref: "#/definitions/Path_coordinates"
     title: "Path"
     description: "A path suggested to the user."
     example:
       distance: 1539
       path_id: 1
       image_url: "http://www.example.com/path_images/1.png"
+      coordinates:
+      - latitude: 1.46581298050294517310021547018550336360931396484375
+        longitude: 5.962133916683182377482808078639209270477294921875
+      - latitude: 1.46581298050294517310021547018550336360931396484375
+        longitude: 5.962133916683182377482808078639209270477294921875
       title: "title"
       average_speed: 1.5500000000000000444089209850062616169452667236328125
+      timestamp: "timestamp"
   inline_response_200:
     properties:
       status:
@@ -235,11 +248,34 @@ definitions:
       - distance: 1539
         path_id: 1
         image_url: "http://www.example.com/path_images/1.png"
+        coordinates:
+        - latitude: 1.46581298050294517310021547018550336360931396484375
+          longitude: 5.962133916683182377482808078639209270477294921875
+        - latitude: 1.46581298050294517310021547018550336360931396484375
+          longitude: 5.962133916683182377482808078639209270477294921875
         title: "title"
         average_speed: 1.5500000000000000444089209850062616169452667236328125
+        timestamp: "timestamp"
       - distance: 1539
         path_id: 1
         image_url: "http://www.example.com/path_images/1.png"
+        coordinates:
+        - latitude: 1.46581298050294517310021547018550336360931396484375
+          longitude: 5.962133916683182377482808078639209270477294921875
+        - latitude: 1.46581298050294517310021547018550336360931396484375
+          longitude: 5.962133916683182377482808078639209270477294921875
         title: "title"
         average_speed: 1.5500000000000000444089209850062616169452667236328125
+        timestamp: "timestamp"
       status: 0
+  Path_coordinates:
+    properties:
+      latitude:
+        type: "number"
+        format: "double"
+      longitude:
+        type: "number"
+        format: "double"
+    example:
+      latitude: 1.46581298050294517310021547018550336360931396484375
+      longitude: 5.962133916683182377482808078639209270477294921875

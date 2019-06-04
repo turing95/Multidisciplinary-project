@@ -1,11 +1,16 @@
+import datetime
+from datetime import timezone
+
 import connexion
 import six
 
 from swagger_server.models.inline_response200 import InlineResponse200  # noqa: E501
 from swagger_server import util
 from swagger_server.models import Path
+from swagger_server.models import PathCoordinates
 
 from path_recommender import user_predictions as up
+from path_recommender import path_correlation as pc
 from path_recommender.utils import path_to_png
 
 
@@ -16,7 +21,7 @@ def get_related_paths(pathId, limit=None, offset=None):  # noqa: E501
 
     :param pathId: 
     :type pathId: int
-    :param limit: 
+    :param limit:
     :type limit: int
     :param offset: 
     :type offset: int
@@ -24,39 +29,25 @@ def get_related_paths(pathId, limit=None, offset=None):  # noqa: E501
     :rtype: InlineResponse200
     """
 
+    correlated_paths_dbf = pc.get_related_paths(pathId)
 
-    return 'do some magic!'
+    correlated_paths = correlated_paths_dbf.to_dict(orient='record')
 
+    response = []
+    for cp in correlated_paths:
+        image_url = path_to_png.plot_path_to_png(timezone=cp['time_zone'])
+        print(cp['time_zone'])
 
-def get_suggested_paths(userId, limit=None, offset=None):  # noqa: E501
-    """Get suggested paths
-
-    Get a set of suggested paths for the current user # noqa: E501
-
-    :param userId: 
-    :type userId: int
-    :param limit: 
-    :type limit: int
-    :param offset: 
-    :type offset: int
-
-    :rtype: InlineResponse200
-    """
-
-    _, predictions=up.recommend(userId)
-    
-    suggestions=predictions.to_dict(orient='records')
-
-    result = []
-    for s in suggestions:
-        image_url=path_to_png.plot_path_to_png(timezone = s['time_zone'])
+        date_time_str = cp['time_zone']
+        date_time_obj = datetime.datetime.strptime(date_time_str, '%Y-%m-%d %H:%M:%S.%f')
+        date_time_obj = date_time_obj.replace(tzinfo=timezone.utc).timestamp()
 
         path = Path(
-            path_id = s['pathId'],
-            title = s['title'],
-            image_url = image_url
+            path_id=cp['pathId'],
+            title=cp['path_title'],
+            image_url=image_url,
+            timestamp=date_time_str
         )
-        result.append(path)
+        response.append(path)
 
-
-    return result
+    return response

@@ -8,16 +8,15 @@ export default class Article extends React.Component {
     const {
       title,
       //description,
-      //publishedAt,
+        timestamp,
       //source,
       image_url,
       //url
       } = this.props.article;
       const description = 'blabla'
-      const publishedAt = 180
       const { noteStyle, featuredTitleStyle } = styles;
       const source='user'
-    const time = moment(publishedAt || moment.now()).fromNow();
+    const time = moment(timestamp || moment.now()).fromNow();
     const defaultImg =
       'https://wallpaper.wiki/wp-content/uploads/2017/04/wallpaper.wiki-Images-HD-Diamond-Pattern-PIC-WPB009691.jpg';
 
@@ -30,7 +29,7 @@ export default class Article extends React.Component {
           featuredTitle={title}
           featuredTitleStyle={featuredTitleStyle}
                 image={{
-                    uri: 'http://localhost:8080'+image_url || defaultImg
+                    uri: 'http://192.168.43.51:5000'+image_url || defaultImg
           }}
         >
           <Text style={{ marginBottom: 10 }}>
